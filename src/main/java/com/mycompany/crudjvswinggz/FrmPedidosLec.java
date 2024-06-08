@@ -4,11 +4,15 @@
  */
 package com.mycompany.crudjvswinggz;
 
+import utilerias.OpcionesCRUD;
+
 /**
  *
  * @author IGABRIEL
  */
 public class FrmPedidosLec extends javax.swing.JFrame {
+
+    private OpcionesCRUD opcionesCRUD;
 
     /**
      * Creates new form FrmPedidosLec
@@ -142,33 +146,39 @@ public class FrmPedidosLec extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc();
+
+        opcionesCRUD = OpcionesCRUD.CREAR;
+        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc(opcionesCRUD);
         frmPedidosEsc.setTitle("Crear Pedido");
         frmPedidosEsc.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
         // TODO add your handling code here:
-          this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
     private void jBtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModificarActionPerformed
         // TODO add your handling code here:
-        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc();
-           frmPedidosEsc.setTitle("Modificar Pedido");
+
+        opcionesCRUD = OpcionesCRUD.MODIFICAR;
+        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc(opcionesCRUD);
+        frmPedidosEsc.setTitle("Modificar Pedido");
         frmPedidosEsc.setVisible(true);
-        
+
     }//GEN-LAST:event_jBtnModificarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
         // TODO add your handling code here:
-        
-        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc();
-           frmPedidosEsc.setTitle("Eliminar Pedido");
+
+           opcionesCRUD = OpcionesCRUD.ELIMINAR;
+        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc(opcionesCRUD);
+        frmPedidosEsc.setTitle("Eliminar Pedido");
         frmPedidosEsc.setVisible(true);
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
