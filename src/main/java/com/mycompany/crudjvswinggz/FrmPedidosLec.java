@@ -36,6 +36,8 @@ public class FrmPedidosLec extends javax.swing.JFrame {
         jBtnEliminar = new javax.swing.JButton();
         jBtnCancelar = new javax.swing.JButton();
 
+        setTitle(" Buscar Pedido");
+
         jlblFechaPedido.setText("Fecha de Pedido:");
 
         jForTextFechaPedido.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
@@ -43,6 +45,11 @@ public class FrmPedidosLec extends javax.swing.JFrame {
         jbtnBuscar.setText("Buscar");
 
         jButton1.setText("Crear");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTablePedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -66,10 +73,25 @@ public class FrmPedidosLec extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTablePedidos);
 
         jBtnModificar.setText("Modificar");
+        jBtnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnModificarActionPerformed(evt);
+            }
+        });
 
         jBtnEliminar.setText("Eliminar");
+        jBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEliminarActionPerformed(evt);
+            }
+        });
 
         jBtnCancelar.setText("Cancelar");
+        jBtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,6 +143,34 @@ public class FrmPedidosLec extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc();
+        frmPedidosEsc.setTitle("Crear Pedido");
+        frmPedidosEsc.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
+        // TODO add your handling code here:
+          this.setVisible(false);
+    }//GEN-LAST:event_jBtnCancelarActionPerformed
+
+    private void jBtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModificarActionPerformed
+        // TODO add your handling code here:
+        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc();
+           frmPedidosEsc.setTitle("Modificar Pedido");
+        frmPedidosEsc.setVisible(true);
+        
+    }//GEN-LAST:event_jBtnModificarActionPerformed
+
+    private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
+        // TODO add your handling code here:
+        
+        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc();
+           frmPedidosEsc.setTitle("Eliminar Pedido");
+        frmPedidosEsc.setVisible(true);
+    }//GEN-LAST:event_jBtnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
