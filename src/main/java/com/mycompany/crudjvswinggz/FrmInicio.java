@@ -44,6 +44,11 @@ public class FrmInicio extends javax.swing.JFrame {
         jMenu1.setText("Mantenimientos");
 
         jMePedidos.setText("Pedidos");
+        jMePedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMePedidosActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMePedidos);
 
         jMenuBar1.add(jMenu1);
@@ -77,6 +82,12 @@ public class FrmInicio extends javax.swing.JFrame {
         this.dispose();
         System.exit(0);
     }//GEN-LAST:event_jMeCerrarMouseClicked
+
+    private void jMePedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMePedidosActionPerformed
+        // TODO add your handling code here:
+          FrmPedidosLec frmPedidosLec= new FrmPedidosLec();
+       frmPedidosLec.setVisible(true);
+    }//GEN-LAST:event_jMePedidosActionPerformed
 
     /**
      * @param args the command line arguments
