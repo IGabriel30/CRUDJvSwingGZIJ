@@ -18,19 +18,19 @@ public class Pedidos {
     private String correoCliente;
     private int cantidad;
     
-    private int categoriaId;
+    private int productoID;
     private Productos productoIde;
 
     public Pedidos() {
     }
 
-    public Pedidos(int pedidoID, Date fechaPedido, String nombreCliente, String correoCliente, int cantidad, int categoriaId, Productos productoIde) {
+    public Pedidos(int pedidoID, Date fechaPedido, String nombreCliente, String correoCliente, int cantidad, int productoID, Productos productoIde) {
         this.pedidoID = pedidoID;
         this.fechaPedido = fechaPedido;
         this.nombreCliente = nombreCliente;
         this.correoCliente = correoCliente;
         this.cantidad = cantidad;
-        this.categoriaId = categoriaId;
+        this.productoID = productoID;
         this.productoIde = productoIde;
     }
 
@@ -74,12 +74,12 @@ public class Pedidos {
         this.cantidad = cantidad;
     }
 
-    public int getCategoriaId() {
-        return categoriaId;
+    public int getProductoID() {
+        return productoID;
     }
 
-    public void setCategoriaId(int categoriaId) {
-        this.categoriaId = categoriaId;
+    public void setProductoID(int productoID) {
+        this.productoID = productoID;
     }
 
     public Productos getProductoIde() {

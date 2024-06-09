@@ -4,6 +4,18 @@
  */
 package com.mycompany.crudjvswinggz;
 
+import accesoadatos.PedidoDAL;
+import accesoadatos.ProductoDAL;
+import entidades.Pedidos;
+import entidades.Productos;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import utilerias.OpcionesCRUD;
 
 /**
@@ -47,6 +59,11 @@ public class FrmPedidosLec extends javax.swing.JFrame {
         jForTextFechaPedido.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
         jbtnBuscar.setText("Buscar");
+        jbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnBuscarActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Crear");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -153,34 +170,141 @@ public class FrmPedidosLec extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         opcionesCRUD = OpcionesCRUD.CREAR;
-        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc(opcionesCRUD);
+        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc(opcionesCRUD, new Pedidos());
         frmPedidosEsc.setTitle("Crear Pedido");
         frmPedidosEsc.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private Pedidos obtenerDatos() {
+        Pedidos pedido = new Pedidos();
+        int row = jTablePedidos.getSelectedRow();
+        if (row == -1) {
+            return null;
+        }
+        pedido.setPedidoID((int) jTablePedidos.getValueAt(row, 0));
+
+        // Conversión correcta de la fecha desde la tabla
+        java.util.Date utilDate = (java.util.Date) jTablePedidos.getValueAt(row, 1);
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        pedido.setFechaPedido(sqlDate);
+        pedido.setNombreCliente(jTablePedidos.getValueAt(row, 2).toString());
+        pedido.setCorreoCliente(jTablePedidos.getValueAt(row, 3).toString());
+        pedido.setCantidad((int) jTablePedidos.getValueAt(row, 4));
+        pedido.setProductoID((int) jTablePedidos.getValueAt(row, 5));
+
+        Productos product = new Productos();
+        product.setNombre(jTablePedidos.getValueAt(row, 6).toString());
+        product.setProductoID((int) jTablePedidos.getValueAt(row, 5));
+        pedido.setProductoIde(product);
+        return pedido;
+    }
+
+    private Pedidos obtenerDatosFecha() {
+        Pedidos pedido = new Pedidos();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String fechaTexto = jForTextFechaPedido.getText().trim();
+        if (fechaTexto.isEmpty()) {
+            return null; // Retorna null si el campo de fecha está vacío
+        }
+
+        try {
+            Date fechaPedido = dateFormat.parse(fechaTexto);
+            pedido.setFechaPedido(fechaPedido);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Debe ser yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
+            return null; // Retorna null si el formato de la fecha es incorrecto
+        }
+
+        return pedido;
+    }
+
+    //BOTONES
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
+
     private void jBtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModificarActionPerformed
         // TODO add your handling code here:
-
-        opcionesCRUD = OpcionesCRUD.MODIFICAR;
-        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc(opcionesCRUD);
-        frmPedidosEsc.setTitle("Modificar Pedido");
-        frmPedidosEsc.setVisible(true);
+        int row = jTablePedidos.getSelectedRow();
+        if (row != -1) {
+            opcionesCRUD = OpcionesCRUD.MODIFICAR;
+            
+            FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc(opcionesCRUD, obtenerDatos());
+            frmPedidosEsc.setTitle("Modificar pedido");
+            frmPedidosEsc.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccionar una fila", "Pedido",
+                    JOptionPane.WARNING_MESSAGE);
+        }
 
     }//GEN-LAST:event_jBtnModificarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
         // TODO add your handling code here:
+        int row = jTablePedidos.getSelectedRow();
+        if (row != -1) {
+            opcionesCRUD = OpcionesCRUD.ELIMINAR;
+            FrmPedidosEsc frmProductosEsc = new FrmPedidosEsc(opcionesCRUD, obtenerDatos());
+            frmProductosEsc.setTitle("Eliminar pedido");
+            frmProductosEsc.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccionar una fila", "pedido",
+                    JOptionPane.WARNING_MESSAGE);
+        }
 
-           opcionesCRUD = OpcionesCRUD.ELIMINAR;
-        FrmPedidosEsc frmPedidosEsc = new FrmPedidosEsc(opcionesCRUD);
-        frmPedidosEsc.setTitle("Eliminar Pedido");
-        frmPedidosEsc.setVisible(true);
     }//GEN-LAST:event_jBtnEliminarActionPerformed
+    private void cargarPedidos() {
+        ArrayList<Pedidos> pedidos = PedidoDAL.buscar(null);
+
+    String[] columnas = {"ID Pedido", "Fecha Pedido", "Nombre Cliente", "Correo Cliente", "Cantidad", "Nombre Producto"};
+    Object[][] datos = new Object[pedidos.size()][6];
+    for (int i = 0; i < pedidos.size(); i++) {
+        Pedidos pedido = pedidos.get(i);
+        datos[i][0] = pedido.getPedidoID();
+        datos[i][1] = pedido.getFechaPedido();
+        datos[i][2] = pedido.getNombreCliente();
+        datos[i][3] = pedido.getCorreoCliente();
+        datos[i][4] = pedido.getCantidad();
+        datos[i][5] = pedido.getProductoIde().getNombre();
+    }
+
+    DefaultTableModel modelTable = new DefaultTableModel(datos, columnas);
+    jTablePedidos.setModel(modelTable);
+    }
+
+    private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarActionPerformed
+        // TODO add your handling code here:
+        try {
+            Pedidos pedidoBusqueda = obtenerDatosFecha();
+            Date fechaPedido = (pedidoBusqueda != null) ? pedidoBusqueda.getFechaPedido() : null;
+
+            ArrayList<Pedidos> pedidos = PedidoDAL.buscar(fechaPedido);
+
+            String[] columnas = {"ID Pedido", "Fecha Pedido", "Nombre Cliente", "Correo Cliente", "Cantidad", "ID Producto", "Nombre Producto"};
+            Object[][] datos = new Object[pedidos.size()][7];
+            for (int i = 0; i < pedidos.size(); i++) {
+                Pedidos pedido = pedidos.get(i);
+                datos[i][0] = pedido.getPedidoID();
+                datos[i][1] = pedido.getFechaPedido();
+                datos[i][2] = pedido.getNombreCliente();
+                datos[i][3] = pedido.getCorreoCliente();
+                datos[i][4] = pedido.getCantidad();
+                datos[i][5] = pedido.getProductoID();
+                datos[i][6] = pedido.getProductoIde().getNombre();
+            }
+
+            DefaultTableModel modelTable = new DefaultTableModel(datos, columnas);
+            jTablePedidos.setModel(modelTable);
+            cargarPedidos();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al realizar la búsqueda.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbtnBuscarActionPerformed
 
     /**
      * @param args the command line arguments

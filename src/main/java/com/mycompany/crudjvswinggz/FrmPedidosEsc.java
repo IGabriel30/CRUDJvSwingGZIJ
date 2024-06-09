@@ -4,7 +4,20 @@
  */
 package com.mycompany.crudjvswinggz;
 
+import accesoadatos.PedidoDAL;
+import accesoadatos.ProductoDAL;
 import utilerias.OpcionesCRUD;
+
+import entidades.Pedidos;
+import entidades.Productos;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import javax.swing.DefaultComboBoxModel;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,13 +25,133 @@ import utilerias.OpcionesCRUD;
  */
 public class FrmPedidosEsc extends javax.swing.JFrame {
 
-        private OpcionesCRUD opcionesCRUD;
+    private OpcionesCRUD opcionesCRUD;
+    private Pedidos pedidoActual = new Pedidos();
+    private HashMap<Integer, Productos> mapProductos = new HashMap<Integer, Productos>();
+
     /**
      * Creates new form FrmPedidosEsc
      */
-    public FrmPedidosEsc(OpcionesCRUD opcion) {
+    public FrmPedidosEsc(OpcionesCRUD opcion, Pedidos pedido) {
         this.opcionesCRUD = opcion;
         initComponents();
+       
+         ArrayList<Productos> products = ProductoDAL.obtenerTodos();
+        DefaultComboBoxModel<Productos> modelCombox = new DefaultComboBoxModel(products.toArray());
+        for (Productos pro : products) {
+            mapProductos.put(pro.getProductoID(), pro);
+        }
+        jComboProducto.setModel(modelCombox);
+        
+        //Si no es la opción de crear, asignar los datos del pedido
+        if (opcion != OpcionesCRUD.CREAR) {
+            asingarDatos(pedido);
+            pedidoActual = pedido;
+        }
+ 
+    }
+
+    private Pedidos obtenerDatos() {
+        Pedidos pedido = new Pedidos();
+        
+        //FEcha
+           try {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = sdf.parse(jFormTxtFechPedido.getText());
+        pedido.setFechaPedido(fecha);
+    } catch (ParseException e) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingresa una fecha válida en formato YYYY-MM-DD.");
+        return null;
+    }
+    pedido.setNombreCliente(jTxtFNombreCliente.getText());
+    pedido.setCorreoCliente(jTxtfCorreo.getText());
+
+    pedido.setCantidad((Integer) jSpinnerCantidad.getValue());
+    Productos producto = (Productos) jComboProducto.getSelectedItem();
+    pedido.setProductoID(producto.getProductoID());
+   
+    return pedido;
+    }
+
+    private void asingarDatos(Pedidos pedido) {
+        //obtener la fecha directamente como tipo Date
+        Date fecha = (Date) jFormTxtFechPedido.getValue();
+        pedido.setFechaPedido(fecha);
+        
+        jTxtFNombreCliente.setText(pedido.getNombreCliente());
+        jTxtfCorreo.setText(pedido.getCorreoCliente());
+
+        Productos producto = mapProductos.get(pedido.getProductoID());
+        jComboProducto.setSelectedItem(producto);
+        
+         //obtener la cantidad del JSpinner
+         jSpinnerCantidad.setValue(pedido.getCantidad());
+    }
+
+    private void crearReg() {
+        try {
+            Pedidos pedido = obtenerDatos();
+            int result = PedidoDAL.crear(pedido);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "El producto fue registrado existosamente", "CREAR PEDIDO",
+                        JOptionPane.INFORMATION_MESSAGE);
+              
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Sucedio un error al crear el producto", "ERROR PEDIDO",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), "ERROR PEDIDO",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+    
+    
+
+    private void modificarReg() {
+        try {
+            Pedidos pedido = obtenerDatos();
+            int result = PedidoDAL.modificar(pedido);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "El producto fue modificado existosamente", "MODIFICAR PEDIDO",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Sucedio un error al modificar el producto", "ERROR PEDIDO",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), "ERROR PEDIDO",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private void eliminarReg() {
+        try {
+            Pedidos pedido = obtenerDatos();
+            int result = PedidoDAL.eliminar(pedido);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "El producto fue eliminado existosamente", "ELIMINAR PRODUCTO",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Sucedio un error al eliminar el producto", "ERROR PRODUCTO",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), "ERROR PRODUCTO",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     /**
@@ -54,8 +187,6 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
         jLabel4.setText("Producto:");
 
         jLabel5.setText("Cantidad:");
-
-        jComboProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jbtnGuardar.setText("Guardar");
         jbtnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -144,19 +275,19 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
 
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
         // TODO add your handling code here:
-        
-         if (null != opcionesCRUD) // TODO add your handling code here:
+
+        if (null != opcionesCRUD) // TODO add your handling code here:
             switch (opcionesCRUD) {
                 case CREAR:
-                   // crearReg();
+                    crearReg();
                     this.setVisible(false);
                     break;
                 case MODIFICAR:
-                   // modificarReg();
+                    modificarReg();
                     this.setVisible(false);
                     break;
                 case ELIMINAR:
-                   // eliminarReg();
+                    eliminarReg();
                     this.setVisible(false);
                     break;
                 default:
@@ -167,10 +298,9 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboProducto;
+    private javax.swing.JComboBox<Productos> jComboProducto;
     private javax.swing.JFormattedTextField jFormTxtFechPedido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
