@@ -82,8 +82,8 @@ public class PedidoDAL {
     public static ArrayList<Pedidos> buscar(Date pedidoSearch) {
        ArrayList<Pedidos> pedidos = new ArrayList<>();
     try (Connection conn = ComunDB.obtenerConexion()) {
-        String sql = "SELECT p.PedidoID, p.FechaPedido, p.ClienteNombre, p.ClienteCorreo, p.Cantidad, p.ProductoID, c.Nombre AS NombreProducto FROM Pedidos p";
-        sql += " INNER JOIN Productos c ON c.ProductoID = p.ProductoID ";
+           String sql = "SELECT p.PedidoID, p.FechaPedido, p.ClienteNombre, p.ClienteCorreo, p.Cantidad, p.ProductoID, c.Nombre AS NombreProducto ";
+        sql += "FROM Pedidos p INNER JOIN Productos c ON c.ProductoID = p.ProductoID";
         
          if (pedidoSearch != null) {
                 sql += " WHERE p.FechaPedido = ?";
@@ -92,10 +92,10 @@ public class PedidoDAL {
 
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
        
-             if (pedidoSearch != null) {
-                    java.sql.Date sqlDate = new java.sql.Date(pedidoSearch.getTime());
-                    statement.setDate(1, sqlDate);
-                }
+              if (pedidoSearch != null) {
+                java.sql.Date sqlDate = new java.sql.Date(pedidoSearch.getTime());
+                statement.setDate(1, sqlDate);
+            }
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {

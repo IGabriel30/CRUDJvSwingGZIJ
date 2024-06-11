@@ -5,15 +5,14 @@
 package com.mycompany.crudjvswinggz;
 
 import accesoadatos.PedidoDAL;
-import accesoadatos.ProductoDAL;
+
 import entidades.Pedidos;
 import entidades.Productos;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utilerias.OpcionesCRUD;
@@ -30,7 +29,9 @@ public class FrmPedidosLec extends javax.swing.JFrame {
      * Creates new form FrmPedidosLec
      */
     public FrmPedidosLec() {
+        
         initComponents();
+        jDateChooserFechaPedido.setDateFormatString("yyyy-MM-dd");
     }
 
     /**
@@ -43,7 +44,6 @@ public class FrmPedidosLec extends javax.swing.JFrame {
     private void initComponents() {
 
         jlblFechaPedido = new javax.swing.JLabel();
-        jForTextFechaPedido = new javax.swing.JFormattedTextField();
         jbtnBuscar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -51,12 +51,11 @@ public class FrmPedidosLec extends javax.swing.JFrame {
         jBtnModificar = new javax.swing.JButton();
         jBtnEliminar = new javax.swing.JButton();
         jBtnCancelar = new javax.swing.JButton();
+        jDateChooserFechaPedido = new com.toedter.calendar.JDateChooser();
 
         setTitle(" Buscar Pedido");
 
         jlblFechaPedido.setText("Fecha de Pedido:");
-
-        jForTextFechaPedido.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
         jbtnBuscar.setText("Buscar");
         jbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -126,9 +125,9 @@ public class FrmPedidosLec extends javax.swing.JFrame {
                         .addContainerGap(19, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jlblFechaPedido)
+                        .addGap(18, 18, 18)
+                        .addComponent(jDateChooserFechaPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jForTextFechaPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
                         .addComponent(jbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(79, 79, 79))
                     .addGroup(layout.createSequentialGroup()
@@ -147,19 +146,21 @@ public class FrmPedidosLec extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jForTextFechaPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtnBuscar)
-                    .addComponent(jlblFechaPedido))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbtnBuscar)
+                            .addComponent(jlblFechaPedido))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jDateChooserFechaPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -177,6 +178,7 @@ public class FrmPedidosLec extends javax.swing.JFrame {
 
     private Pedidos obtenerDatos() {
         Pedidos pedido = new Pedidos();
+        
         int row = jTablePedidos.getSelectedRow();
         if (row == -1) {
             return null;
@@ -200,23 +202,16 @@ public class FrmPedidosLec extends javax.swing.JFrame {
     }
 
     private Pedidos obtenerDatosFecha() {
-        Pedidos pedido = new Pedidos();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+     Pedidos pedido = new Pedidos();
+    Date fechaPedido = jDateChooserFechaPedido.getDate();
 
-        String fechaTexto = jForTextFechaPedido.getText().trim();
-        if (fechaTexto.isEmpty()) {
-            return null; // Retorna null si el campo de fecha está vacío
-        }
+    if (fechaPedido == null) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha.", "Error", JOptionPane.ERROR_MESSAGE);
+        return null;
+    }
 
-        try {
-            Date fechaPedido = dateFormat.parse(fechaTexto);
-            pedido.setFechaPedido(fechaPedido);
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Debe ser yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
-            return null; // Retorna null si el formato de la fecha es incorrecto
-        }
-
-        return pedido;
+    pedido.setFechaPedido(fechaPedido);
+    return pedido;   
     }
 
     //BOTONES
@@ -258,24 +253,7 @@ public class FrmPedidosLec extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jBtnEliminarActionPerformed
-    private void cargarPedidos() {
-        ArrayList<Pedidos> pedidos = PedidoDAL.buscar(null);
-
-    String[] columnas = {"ID Pedido", "Fecha Pedido", "Nombre Cliente", "Correo Cliente", "Cantidad", "Nombre Producto"};
-    Object[][] datos = new Object[pedidos.size()][6];
-    for (int i = 0; i < pedidos.size(); i++) {
-        Pedidos pedido = pedidos.get(i);
-        datos[i][0] = pedido.getPedidoID();
-        datos[i][1] = pedido.getFechaPedido();
-        datos[i][2] = pedido.getNombreCliente();
-        datos[i][3] = pedido.getCorreoCliente();
-        datos[i][4] = pedido.getCantidad();
-        datos[i][5] = pedido.getProductoIde().getNombre();
-    }
-
-    DefaultTableModel modelTable = new DefaultTableModel(datos, columnas);
-    jTablePedidos.setModel(modelTable);
-    }
+   
 
     private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarActionPerformed
         // TODO add your handling code here:
@@ -300,7 +278,7 @@ public class FrmPedidosLec extends javax.swing.JFrame {
 
             DefaultTableModel modelTable = new DefaultTableModel(datos, columnas);
             jTablePedidos.setModel(modelTable);
-            cargarPedidos();
+           
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error al realizar la búsqueda.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -346,7 +324,7 @@ public class FrmPedidosLec extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEliminar;
     private javax.swing.JButton jBtnModificar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JFormattedTextField jForTextFechaPedido;
+    private com.toedter.calendar.JDateChooser jDateChooserFechaPedido;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTablePedidos;
     private javax.swing.JButton jbtnBuscar;
