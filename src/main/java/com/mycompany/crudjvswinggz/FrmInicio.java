@@ -32,6 +32,7 @@ public class FrmInicio extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMePedidos = new javax.swing.JMenuItem();
+        jMeProductos = new javax.swing.JMenuItem();
         jMeCerrar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,6 +54,16 @@ public class FrmInicio extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMePedidos);
+
+        jMeProductos.setBackground(new java.awt.Color(204, 204, 255));
+        jMeProductos.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        jMeProductos.setText("Productos");
+        jMeProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMeProductosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMeProductos);
 
         jMenuBar1.add(jMenu1);
 
@@ -88,9 +99,14 @@ public class FrmInicio extends javax.swing.JFrame {
 
     private void jMePedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMePedidosActionPerformed
         // TODO add your handling code here:
-          FrmPedidosLec frmPedidosLec= new FrmPedidosLec();
-       frmPedidosLec.setVisible(true);
+        FrmPedidosLec frmPedidosLec = new FrmPedidosLec();
+        frmPedidosLec.setVisible(true);
     }//GEN-LAST:event_jMePedidosActionPerformed
+
+    private void jMeProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMeProductosActionPerformed
+        FrmProductosLec frmProductosLec = new FrmProductosLec();
+        frmProductosLec.setVisible(true);
+    }//GEN-LAST:event_jMeProductosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,6 +146,7 @@ public class FrmInicio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMeCerrar;
     private javax.swing.JMenuItem jMePedidos;
+    private javax.swing.JMenuItem jMeProductos;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
