@@ -24,7 +24,7 @@ public class PedidoDAL {
 
             String sql = "INSERT INTO Pedidos (FechaPedido, ClienteNombre, ClienteCorreo, ProductoID, Cantidad) VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
-               java.sql.Date sqlDate = new java.sql.Date(pedidos.getFechaPedido().getTime());
+                java.sql.Date sqlDate = new java.sql.Date(pedidos.getFechaPedido().getTime());
                 statement.setDate(1, sqlDate);
                 statement.setString(2, pedidos.getNombreCliente());
                 statement.setString(3, pedidos.getCorreoCliente());
@@ -40,86 +40,84 @@ public class PedidoDAL {
         }
     }
 
-    public static int modificar(Pedidos pedidos) {
-        try (Connection conn = ComunDB.obtenerConexion()) {
-
-            String sql = "UPDATE Pedidos SET FechaPedido=?, ClienteNombre=?, ClienteCorreo=?, ProductoID=?, Cantidad=? WHERE PedidoID=?";
-            try (PreparedStatement statement = conn.prepareStatement(sql)) {
-                java.sql.Date sqlDate = new java.sql.Date(pedidos.getFechaPedido().getTime());
-                statement.setDate(1, sqlDate);
-                
-                statement.setString(2, pedidos.getNombreCliente());
-                statement.setString(3, pedidos.getCorreoCliente());
-                statement.setInt(4, pedidos.getCantidad());
-                statement.setInt(5, pedidos.getProductoID());
-                statement.setInt(6, pedidos.getPedidoID());
-                int rowsAffected = statement.executeUpdate();
-                return rowsAffected;
-            } catch (SQLException e) {
-                throw new RuntimeException("Error al crear el Pedido", e);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al obtener la conexión a la base de datos", e);
-        }
-    }
-
-    public static int eliminar(Pedidos pedido) {
-        try (Connection conn = ComunDB.obtenerConexion()) {
-
-            String sql = "DELETE FROM Pedidos WHERE PedidoID=?";
-            try (PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setInt(1, pedido.getPedidoID());
-                int rowsAffected = statement.executeUpdate();
-                return rowsAffected;
-            } catch (SQLException e) {
-                throw new RuntimeException("Error al crear el producto", e);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al obtener la conexión a la base de datos", e);
-        }
-    }
-
-    public static ArrayList<Pedidos> buscar(Date pedidoSearch) {
-       ArrayList<Pedidos> pedidos = new ArrayList<>();
+   public static int modificar(Pedidos pedidos) {
     try (Connection conn = ComunDB.obtenerConexion()) {
-           String sql = "SELECT p.PedidoID, p.FechaPedido, p.ClienteNombre, p.ClienteCorreo, p.Cantidad, p.ProductoID, c.Nombre AS NombreProducto ";
-        sql += "FROM Pedidos p INNER JOIN Productos c ON c.ProductoID = p.ProductoID";
-        
-         if (pedidoSearch != null) {
-                sql += " WHERE p.FechaPedido = ?";
-            }
-       // sql += " WHERE p.FechaPedido = ? ";
-
+        String sql = "UPDATE Pedidos SET FechaPedido=?, ClienteNombre=?, ClienteCorreo=?, ProductoID=?, Cantidad=? WHERE PedidoID=?";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
-       
-              if (pedidoSearch != null) {
-                java.sql.Date sqlDate = new java.sql.Date(pedidoSearch.getTime());
-                statement.setDate(1, sqlDate);
-            }
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Pedidos pedido = new Pedidos();
-                    pedido.setPedidoID(resultSet.getInt("PedidoID"));
-                    pedido.setFechaPedido(resultSet.getDate("FechaPedido"));
-                    pedido.setNombreCliente(resultSet.getString("ClienteNombre"));
-                    pedido.setCorreoCliente(resultSet.getString("ClienteCorreo"));
-                    pedido.setCantidad(resultSet.getInt("Cantidad"));
-
-                    pedido.setProductoID(resultSet.getInt("ProductoID"));
-                    Productos producto = new Productos();
-                    producto.setNombre(resultSet.getString("NombreProducto"));
-                    pedido.setProductoIde(producto);
-
-                    pedidos.add(pedido);
-                }
-            }
+            java.sql.Date sqlDate = new java.sql.Date(pedidos.getFechaPedido().getTime());
+            statement.setDate(1, sqlDate);
+            statement.setString(2, pedidos.getNombreCliente());
+            statement.setString(3, pedidos.getCorreoCliente());
+            statement.setInt(4, pedidos.getCantidad());
+            statement.setInt(5, pedidos.getProductoID());
+            statement.setInt(6, pedidos.getPedidoID());
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected;
         } catch (SQLException e) {
-            throw new RuntimeException("Error al buscar pedidos", e);
+            throw new RuntimeException("Error al modificar el Pedido", e);
         }
     } catch (SQLException e) {
         throw new RuntimeException("Error al obtener la conexión a la base de datos", e);
     }
-    return pedidos;
+}
+
+public static int eliminar(Pedidos pedido) {
+    try (Connection conn = ComunDB.obtenerConexion()) {
+        String sql = "DELETE FROM Pedidos WHERE PedidoID=?";
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setInt(1, pedido.getPedidoID());
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar el producto", e);
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException("Error al obtener la conexión a la base de datos", e);
+    }
+}
+
+
+    public static ArrayList<Pedidos> buscar(Date pedidoSearch) {
+        ArrayList<Pedidos> pedidos = new ArrayList<>();
+        try (Connection conn = ComunDB.obtenerConexion()) {
+            String sql = "SELECT p.PedidoID, p.FechaPedido, p.ClienteNombre, p.ClienteCorreo, p.Cantidad, p.ProductoID, c.Nombre AS NombreProducto ";
+            sql += "FROM Pedidos p INNER JOIN Productos c ON c.ProductoID = p.ProductoID";
+
+            if (pedidoSearch != null) {
+                sql += " WHERE p.FechaPedido = ?";
+            }
+            // sql += " WHERE p.FechaPedido = ? ";
+
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+
+                if (pedidoSearch != null) {
+                    java.sql.Date sqlDate = new java.sql.Date(pedidoSearch.getTime());
+                    statement.setDate(1, sqlDate);
+                }
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Pedidos pedido = new Pedidos();
+                        pedido.setPedidoID(resultSet.getInt("PedidoID"));
+                        pedido.setFechaPedido(resultSet.getDate("FechaPedido"));
+                        pedido.setNombreCliente(resultSet.getString("ClienteNombre"));
+                        pedido.setCorreoCliente(resultSet.getString("ClienteCorreo"));
+                        pedido.setCantidad(resultSet.getInt("Cantidad"));
+
+                        pedido.setProductoID(resultSet.getInt("ProductoID"));
+                        Productos producto = new Productos();
+                        producto.setNombre(resultSet.getString("NombreProducto"));
+                        pedido.setProductoIde(producto);
+
+                        pedidos.add(pedido);
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException("Error al buscar pedidos", e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener la conexión a la base de datos", e);
+        }
+        return pedidos;
     }
 }

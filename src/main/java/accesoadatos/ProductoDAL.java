@@ -35,7 +35,7 @@ public class ProductoDAL {
                     }
                 }
             } catch (SQLException e) {
-                throw new RuntimeException("Error al obtener las categorias", e);
+                throw new RuntimeException("Error al obtener los pedidos", e);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al obtener la conexión a la base de datos", e);
