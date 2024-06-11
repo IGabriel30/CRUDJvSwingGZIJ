@@ -36,6 +36,8 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
         this.opcionesCRUD = opcion;
         initComponents();
        
+         jDateChooserFechaPedido.setDateFormatString("yyyy-MM-dd");
+        
          ArrayList<Productos> products = ProductoDAL.obtenerTodos();
         DefaultComboBoxModel<Productos> modelCombox = new DefaultComboBoxModel(products.toArray());
         for (Productos pro : products) {
@@ -55,14 +57,13 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
         Pedidos pedido = new Pedidos();
         
         //FEcha
-           try {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fecha = sdf.parse(jFormTxtFechPedido.getText());
-        pedido.setFechaPedido(fecha);
-    } catch (ParseException e) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingresa una fecha válida en formato YYYY-MM-DD.");
+        // Obtener la fecha desde JDateChooser
+    Date fecha = jDateChooserFechaPedido.getDate();
+    if (fecha == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, selecciona una fecha válida.");
         return null;
     }
+    pedido.setFechaPedido(fecha);
     pedido.setNombreCliente(jTxtFNombreCliente.getText());
     pedido.setCorreoCliente(jTxtfCorreo.getText());
 
@@ -74,9 +75,8 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
     }
 
     private void asingarDatos(Pedidos pedido) {
-        //obtener la fecha directamente como tipo Date
-        Date fecha = (Date) jFormTxtFechPedido.getValue();
-        pedido.setFechaPedido(fecha);
+      // Establecer la fecha en JDateChooser
+    jDateChooserFechaPedido.setDate(pedido.getFechaPedido());
         
         jTxtFNombreCliente.setText(pedido.getNombreCliente());
         jTxtfCorreo.setText(pedido.getCorreoCliente());
@@ -172,10 +172,10 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
         jTxtfCorreo = new javax.swing.JTextField();
         jComboProducto = new javax.swing.JComboBox<>();
         jSpinnerCantidad = new javax.swing.JSpinner();
-        jFormTxtFechPedido = new javax.swing.JFormattedTextField();
         jbtnGuardar = new javax.swing.JButton();
         jbtnCancelar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        jDateChooserFechaPedido = new com.toedter.calendar.JDateChooser();
 
         setTitle("Pedidos");
         setBackground(new java.awt.Color(204, 204, 255));
@@ -242,8 +242,8 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
                                             .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(29, 29, 29)
-                                .addComponent(jFormTxtFechPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(18, 18, 18)
+                                .addComponent(jDateChooserFechaPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(140, 140, 140)
                         .addComponent(jLabel6)))
@@ -254,34 +254,31 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel6)
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jFormTxtFechPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTxtFNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtfCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbtnGuardar)
-                            .addComponent(jbtnCancelar))
-                        .addGap(38, 38, 38))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jDateChooserFechaPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtFNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtfCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnGuardar)
+                    .addComponent(jbtnCancelar))
+                .addGap(38, 38, 38))
         );
 
         pack();
@@ -321,7 +318,7 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Productos> jComboProducto;
-    private javax.swing.JFormattedTextField jFormTxtFechPedido;
+    private com.toedter.calendar.JDateChooser jDateChooserFechaPedido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

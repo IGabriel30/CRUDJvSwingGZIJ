@@ -185,10 +185,10 @@ public class FrmPedidosLec extends javax.swing.JFrame {
         }
         pedido.setPedidoID((int) jTablePedidos.getValueAt(row, 0));
 
-        // Conversión correcta de la fecha desde la tabla
-        java.util.Date utilDate = (java.util.Date) jTablePedidos.getValueAt(row, 1);
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        pedido.setFechaPedido(sqlDate);
+   // Conversión correcta de la fecha desde la tabla
+    java.util.Date utilDate = (java.util.Date) jTablePedidos.getValueAt(row, 1);
+    pedido.setFechaPedido(utilDate); // Usamos utilDate directamente
+
         pedido.setNombreCliente(jTablePedidos.getValueAt(row, 2).toString());
         pedido.setCorreoCliente(jTablePedidos.getValueAt(row, 3).toString());
         pedido.setCantidad((int) jTablePedidos.getValueAt(row, 4));
