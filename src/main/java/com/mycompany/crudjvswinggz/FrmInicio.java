@@ -40,9 +40,12 @@ public class FrmInicio extends javax.swing.JFrame {
         jMenuBar1.setBackground(new java.awt.Color(204, 204, 255));
         jMenuBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jMenuBar1.setForeground(new java.awt.Color(51, 0, 51));
+        jMenuBar1.setFont(new java.awt.Font("Garamond", 1, 24)); // NOI18N
 
         jMenu1.setText("Mantenimientos");
 
+        jMePedidos.setBackground(new java.awt.Color(204, 204, 255));
+        jMePedidos.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
         jMePedidos.setText("Pedidos");
         jMePedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
