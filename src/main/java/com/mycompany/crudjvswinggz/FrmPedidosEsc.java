@@ -51,7 +51,7 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
             asingarDatos(pedido);
             pedidoActual = pedido;
         }
-        
+
         originalButtonColor = jbtnGuardar.getBackground();
     }
 
@@ -367,11 +367,11 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnCancelarMouseEntered
 
     private void jbtnGuardarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnGuardarMouseExited
-             jbtnGuardar.setBackground(originalButtonColor);
+        jbtnGuardar.setBackground(originalButtonColor);
     }//GEN-LAST:event_jbtnGuardarMouseExited
 
     private void jbtnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCancelarMouseExited
-         jbtnCancelar.setBackground(originalButtonColor);
+        jbtnCancelar.setBackground(originalButtonColor);
     }//GEN-LAST:event_jbtnCancelarMouseExited
 
     /**

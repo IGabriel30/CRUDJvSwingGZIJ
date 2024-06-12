@@ -25,7 +25,7 @@ import utilerias.OpcionesCRUD;
 public class FrmPedidosLec extends javax.swing.JFrame {
 
     private OpcionesCRUD opcionesCRUD;
-    
+
     //se declara originalbuttonColor 
     private Color originalButtonColor;
 
@@ -35,10 +35,10 @@ public class FrmPedidosLec extends javax.swing.JFrame {
     public FrmPedidosLec() {
 
         initComponents();
-        jDateChooserFechaPedido.setDateFormatString("yyyy-MM-dd"); 
-        
+        jDateChooserFechaPedido.setDateFormatString("yyyy-MM-dd");
+
         //se obtiene el color de los botones, en este caso todos tienen el mismo
-        originalButtonColor = jBtnEliminar.getBackground();       
+        originalButtonColor = jBtnEliminar.getBackground();
     }
 
     /**
@@ -360,7 +360,7 @@ public class FrmPedidosLec extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnBuscarActionPerformed
 
     private void jBtnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnEliminarMouseEntered
-         jBtnEliminar.setBackground(Color.RED);
+        jBtnEliminar.setBackground(Color.RED);
     }//GEN-LAST:event_jBtnEliminarMouseEntered
 
     private void jBtnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnCancelarMouseEntered
@@ -368,27 +368,27 @@ public class FrmPedidosLec extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnCancelarMouseEntered
 
     private void jbtnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnBuscarMouseEntered
-         jbtnBuscar.setBackground(Color.lightGray);
+        jbtnBuscar.setBackground(Color.lightGray);
     }//GEN-LAST:event_jbtnBuscarMouseEntered
-    
+
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
-         jButton1.setBackground(Color.PINK);
+        jButton1.setBackground(Color.PINK);
     }//GEN-LAST:event_jButton1MouseEntered
 
     private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
-             jButton1.setBackground(originalButtonColor);
+        jButton1.setBackground(originalButtonColor);
     }//GEN-LAST:event_jButton1MouseExited
 
     private void jbtnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnBuscarMouseExited
-           jbtnBuscar.setBackground(originalButtonColor);
+        jbtnBuscar.setBackground(originalButtonColor);
     }//GEN-LAST:event_jbtnBuscarMouseExited
 
     private void jBtnModificarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnModificarMouseExited
-         jBtnModificar.setBackground(originalButtonColor);
+        jBtnModificar.setBackground(originalButtonColor);
     }//GEN-LAST:event_jBtnModificarMouseExited
 
     private void jBtnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnEliminarMouseExited
-          jBtnEliminar.setBackground(originalButtonColor);
+        jBtnEliminar.setBackground(originalButtonColor);
     }//GEN-LAST:event_jBtnEliminarMouseExited
 
     private void jBtnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnCancelarMouseExited
@@ -396,7 +396,7 @@ public class FrmPedidosLec extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnCancelarMouseExited
 
     private void jBtnModificarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnModificarMouseEntered
-           jBtnModificar.setBackground(Color.WHITE);
+        jBtnModificar.setBackground(Color.WHITE);
     }//GEN-LAST:event_jBtnModificarMouseEntered
 
     /**
