@@ -28,10 +28,10 @@ public class PedidoDAL {
                 statement.setDate(1, sqlDate);
                 statement.setString(2, pedidos.getNombreCliente());
                 statement.setString(3, pedidos.getCorreoCliente());
-                
-                 statement.setInt(4, pedidos.getProductoID());
+
+                statement.setInt(4, pedidos.getProductoID());
                 statement.setInt(5, pedidos.getCantidad());
-               
+
                 int rowsAffected = statement.executeUpdate();
                 return rowsAffected;
             } catch (SQLException e) {
@@ -42,44 +42,43 @@ public class PedidoDAL {
         }
     }
 
-   public static int modificar(Pedidos pedidos) {
-    try (Connection conn = ComunDB.obtenerConexion()) {
-        String sql = "UPDATE Pedidos SET FechaPedido=?, ClienteNombre=?, ClienteCorreo=?, ProductoID=?, Cantidad=? WHERE PedidoID=?";
-        try (PreparedStatement statement = conn.prepareStatement(sql)) {
-            java.sql.Date sqlDate = new java.sql.Date(pedidos.getFechaPedido().getTime());
-            statement.setDate(1, sqlDate);
-            statement.setString(2, pedidos.getNombreCliente());
-            statement.setString(3, pedidos.getCorreoCliente());
-            
+    public static int modificar(Pedidos pedidos) {
+        try (Connection conn = ComunDB.obtenerConexion()) {
+            String sql = "UPDATE Pedidos SET FechaPedido=?, ClienteNombre=?, ClienteCorreo=?, ProductoID=?, Cantidad=? WHERE PedidoID=?";
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                java.sql.Date sqlDate = new java.sql.Date(pedidos.getFechaPedido().getTime());
+                statement.setDate(1, sqlDate);
+                statement.setString(2, pedidos.getNombreCliente());
+                statement.setString(3, pedidos.getCorreoCliente());
+
                 statement.setInt(4, pedidos.getProductoID());
-            statement.setInt(5, pedidos.getCantidad());
-        
-            statement.setInt(6, pedidos.getPedidoID());
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al modificar el Pedido", e);
-        }
-    } catch (SQLException e) {
-        throw new RuntimeException("Error al obtener la conexión a la base de datos", e);
-    }
-}
+                statement.setInt(5, pedidos.getCantidad());
 
-public static int eliminar(Pedidos pedido) {
-    try (Connection conn = ComunDB.obtenerConexion()) {
-        String sql = "DELETE FROM Pedidos WHERE PedidoID=?";
-        try (PreparedStatement statement = conn.prepareStatement(sql)) {
-            statement.setInt(1, pedido.getPedidoID());
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected;
+                statement.setInt(6, pedidos.getPedidoID());
+                int rowsAffected = statement.executeUpdate();
+                return rowsAffected;
+            } catch (SQLException e) {
+                throw new RuntimeException("Error al modificar el Pedido", e);
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar el producto", e);
+            throw new RuntimeException("Error al obtener la conexión a la base de datos", e);
         }
-    } catch (SQLException e) {
-        throw new RuntimeException("Error al obtener la conexión a la base de datos", e);
     }
-}
 
+    public static int eliminar(Pedidos pedido) {
+        try (Connection conn = ComunDB.obtenerConexion()) {
+            String sql = "DELETE FROM Pedidos WHERE PedidoID=?";
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                statement.setInt(1, pedido.getPedidoID());
+                int rowsAffected = statement.executeUpdate();
+                return rowsAffected;
+            } catch (SQLException e) {
+                throw new RuntimeException("Error al eliminar el producto", e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener la conexión a la base de datos", e);
+        }
+    }
 
     public static ArrayList<Pedidos> buscar(Date pedidoSearch) {
         ArrayList<Pedidos> pedidos = new ArrayList<>();

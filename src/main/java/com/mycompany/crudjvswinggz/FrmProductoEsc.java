@@ -6,6 +6,7 @@ package com.mycompany.crudjvswinggz;
 
 import accesoadatos.ProductoDAL;
 import entidades.Productos;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 import utilerias.OpcionesCRUD;
 import static utilerias.OpcionesCRUD.CREAR;
@@ -18,15 +19,16 @@ import static utilerias.OpcionesCRUD.MODIFICAR;
  */
 public class FrmProductoEsc extends javax.swing.JFrame {
 
-     private OpcionesCRUD opcionCRUD;
+    private OpcionesCRUD opcionCRUD;
     private Productos productActual = new Productos();
+
     /**
      * Creates new form FrmProductoEsc
      */
     public FrmProductoEsc(OpcionesCRUD opcion, Productos producto) {
         this.opcionCRUD = opcion;
         initComponents();
-        
+
         if (opcion != OpcionesCRUD.CREAR) {
             asingarDatos(producto);
             productActual = producto;
@@ -80,6 +82,11 @@ public class FrmProductoEsc extends javax.swing.JFrame {
         jbtnGuardar.setBackground(new java.awt.Color(153, 153, 255));
         jbtnGuardar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jbtnGuardar.setText("Guardar");
+        jbtnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnGuardarMouseEntered(evt);
+            }
+        });
         jbtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnGuardarActionPerformed(evt);
@@ -89,6 +96,11 @@ public class FrmProductoEsc extends javax.swing.JFrame {
         jbtnCancelar.setBackground(new java.awt.Color(153, 153, 255));
         jbtnCancelar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jbtnCancelar.setText("Cancelar");
+        jbtnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnCancelarMouseEntered(evt);
+            }
+        });
         jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnCancelarActionPerformed(evt);
@@ -119,15 +131,14 @@ public class FrmProductoEsc extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addComponent(jbtnCancelar))
-                                            .addComponent(jtxtCategoria))
+                                        .addComponent(jtxtCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
                                         .addGap(128, 128, 128))
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jtxtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jbtnGuardar))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jbtnGuardar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbtnCancelar)))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -165,11 +176,11 @@ public class FrmProductoEsc extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
-               this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_jbtnCancelarActionPerformed
 
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
-       if (null != opcionCRUD) // TODO add your handling code here:
+        if (null != opcionCRUD) // TODO add your handling code here:
             switch (opcionCRUD) {
                 case CREAR:
                     crearReg();
@@ -188,6 +199,14 @@ public class FrmProductoEsc extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_jbtnGuardarActionPerformed
 
+    private void jbtnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnGuardarMouseEntered
+        jbtnGuardar.setBackground(Color.BLUE);
+    }//GEN-LAST:event_jbtnGuardarMouseEntered
+
+    private void jbtnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCancelarMouseEntered
+       jbtnCancelar.setBackground(Color.GRAY);
+    }//GEN-LAST:event_jbtnCancelarMouseEntered
+
     private Productos obtenerDatos() {
         Productos producto = new Productos();
         producto.setNombre(jtxtNombre.getText());
@@ -202,9 +221,10 @@ public class FrmProductoEsc extends javax.swing.JFrame {
         jtxtNombre.setText(producto.getNombre());
         jTxtADescripcion.setText(producto.getDescripcion());
         jtxtPrecio.setText(Double.toString(producto.getPrecio()));
-        
+
         jtxtCategoria.setText(producto.getCategoria());
     }
+
     private void crearReg() {
         try {
             Productos producto = obtenerDatos();
@@ -270,7 +290,7 @@ public class FrmProductoEsc extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

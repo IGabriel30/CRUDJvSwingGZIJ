@@ -10,6 +10,7 @@ import utilerias.OpcionesCRUD;
 
 import entidades.Pedidos;
 import entidades.Productos;
+import java.awt.Color;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,58 +35,58 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
     public FrmPedidosEsc(OpcionesCRUD opcion, Pedidos pedido) {
         this.opcionesCRUD = opcion;
         initComponents();
-       
-         jDateChooserFechaPedido.setDateFormatString("yyyy-MM-dd");
-        
-         ArrayList<Productos> products = ProductoDAL.obtenerTodos();
+
+        jDateChooserFechaPedido.setDateFormatString("yyyy-MM-dd");
+
+        ArrayList<Productos> products = ProductoDAL.obtenerTodos();
         DefaultComboBoxModel<Productos> modelCombox = new DefaultComboBoxModel(products.toArray());
         for (Productos pro : products) {
             mapProductos.put(pro.getProductoID(), pro);
         }
         jComboProducto.setModel(modelCombox);
-        
+
         //Si no es la opción de crear, asignar los datos del pedido
         if (opcion != OpcionesCRUD.CREAR) {
             asingarDatos(pedido);
             pedidoActual = pedido;
         }
- 
+
     }
 
     private Pedidos obtenerDatos() {
         Pedidos pedido = new Pedidos();
-        
+
         //FEcha
         // Obtener la fecha desde JDateChooser
-    Date fecha = jDateChooserFechaPedido.getDate();
-    if (fecha == null) {
-        JOptionPane.showMessageDialog(this, "Por favor, selecciona una fecha válida.");
-        return null;
-    }
-    pedido.setFechaPedido(fecha);
-    pedido.setNombreCliente(jTxtFNombreCliente.getText());
-    pedido.setCorreoCliente(jTxtfCorreo.getText());
+        Date fecha = jDateChooserFechaPedido.getDate();
+        if (fecha == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona una fecha válida.");
+            return null;
+        }
+        pedido.setFechaPedido(fecha);
+        pedido.setNombreCliente(jTxtFNombreCliente.getText());
+        pedido.setCorreoCliente(jTxtfCorreo.getText());
 
-    pedido.setCantidad((Integer) jSpinnerCantidad.getValue());
-    Productos producto = (Productos) jComboProducto.getSelectedItem();
-    pedido.setProductoID(producto.getProductoID());
-   
-    pedido.setPedidoID(pedidoActual.getPedidoID());
-    return pedido;
+        pedido.setCantidad((Integer) jSpinnerCantidad.getValue());
+        Productos producto = (Productos) jComboProducto.getSelectedItem();
+        pedido.setProductoID(producto.getProductoID());
+
+        pedido.setPedidoID(pedidoActual.getPedidoID());
+        return pedido;
     }
 
     private void asingarDatos(Pedidos pedido) {
-      // Establecer la fecha en JDateChooser
-    jDateChooserFechaPedido.setDate(pedido.getFechaPedido());
-        
+        // Establecer la fecha en JDateChooser
+        jDateChooserFechaPedido.setDate(pedido.getFechaPedido());
+
         jTxtFNombreCliente.setText(pedido.getNombreCliente());
         jTxtfCorreo.setText(pedido.getCorreoCliente());
 
         Productos producto = mapProductos.get(pedido.getProductoID());
         jComboProducto.setSelectedItem(producto);
-        
-         //obtener la cantidad del JSpinner
-         jSpinnerCantidad.setValue(pedido.getCantidad());
+
+        //obtener la cantidad del JSpinner
+        jSpinnerCantidad.setValue(pedido.getCantidad());
     }
 
     private void crearReg() {
@@ -96,7 +97,7 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,
                         "El producto fue registrado existosamente", "CREAR PEDIDO",
                         JOptionPane.INFORMATION_MESSAGE);
-              
+
             } else {
                 JOptionPane.showMessageDialog(this,
                         "Sucedio un error al crear el producto", "ERROR PEDIDO",
@@ -109,8 +110,6 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
         }
 
     }
-    
-    
 
     private void modificarReg() {
         try {
@@ -200,6 +199,11 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
         jbtnGuardar.setBackground(new java.awt.Color(153, 153, 255));
         jbtnGuardar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jbtnGuardar.setText("Guardar");
+        jbtnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnGuardarMouseEntered(evt);
+            }
+        });
         jbtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnGuardarActionPerformed(evt);
@@ -209,6 +213,11 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
         jbtnCancelar.setBackground(new java.awt.Color(153, 153, 255));
         jbtnCancelar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jbtnCancelar.setText("Cancelar");
+        jbtnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnCancelarMouseEntered(evt);
+            }
+        });
         jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnCancelarActionPerformed(evt);
@@ -326,6 +335,14 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
                     break;
             }
     }//GEN-LAST:event_jbtnGuardarActionPerformed
+
+    private void jbtnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnGuardarMouseEntered
+           jbtnGuardar.setBackground(Color.BLUE);
+    }//GEN-LAST:event_jbtnGuardarMouseEntered
+
+    private void jbtnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCancelarMouseEntered
+        jbtnCancelar.setBackground(Color.GRAY);
+    }//GEN-LAST:event_jbtnCancelarMouseEntered
 
     /**
      * @param args the command line arguments

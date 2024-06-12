@@ -6,6 +6,7 @@ package com.mycompany.crudjvswinggz;
 
 import accesoadatos.ProductoDAL;
 import entidades.Productos;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -55,6 +56,11 @@ public class FrmProductosLec extends javax.swing.JFrame {
         jBtnBuscar.setBackground(new java.awt.Color(153, 153, 255));
         jBtnBuscar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jBtnBuscar.setText("Buscar");
+        jBtnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jBtnBuscarMouseEntered(evt);
+            }
+        });
         jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnBuscarActionPerformed(evt);
@@ -67,6 +73,11 @@ public class FrmProductosLec extends javax.swing.JFrame {
         jbtnCrear.setBackground(new java.awt.Color(153, 153, 255));
         jbtnCrear.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jbtnCrear.setText("Crear");
+        jbtnCrear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnCrearMouseEntered(evt);
+            }
+        });
         jbtnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnCrearActionPerformed(evt);
@@ -88,6 +99,11 @@ public class FrmProductosLec extends javax.swing.JFrame {
         jbtnEliminar.setBackground(new java.awt.Color(153, 153, 255));
         jbtnEliminar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jbtnEliminar.setText("Eliminar");
+        jbtnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnEliminarMouseEntered(evt);
+            }
+        });
         jbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnEliminarActionPerformed(evt);
@@ -97,6 +113,11 @@ public class FrmProductosLec extends javax.swing.JFrame {
         jbtnCancelar.setBackground(new java.awt.Color(153, 153, 255));
         jbtnCancelar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jbtnCancelar.setText("Cancelar");
+        jbtnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnCancelarMouseEntered(evt);
+            }
+        });
         jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnCancelarActionPerformed(evt);
@@ -131,7 +152,7 @@ public class FrmProductosLec extends javax.swing.JFrame {
                         .addComponent(jbtnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jbtnCancelar)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,15 +185,15 @@ public class FrmProductosLec extends javax.swing.JFrame {
         frmProductosEsc.setVisible(true);
     }//GEN-LAST:event_jbtnCrearActionPerformed
 
-        private Productos obtenerDatos() {
+    private Productos obtenerDatos() {
         Productos producto = new Productos();
         int row = jTableProductos.getSelectedRow();
         producto.setProductoID((int) jTableProductos.getValueAt(row, 0));
         producto.setNombre(jTableProductos.getValueAt(row, 1).toString());
         producto.setDescripcion(jTableProductos.getValueAt(row, 2).toString());
-         producto.setCategoria(jTableProductos.getValueAt(row, 3).toString());
+        producto.setCategoria(jTableProductos.getValueAt(row, 3).toString());
         producto.setPrecio((double) jTableProductos.getValueAt(row, 4));
-       
+
         return producto;
     }
     private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
@@ -180,7 +201,7 @@ public class FrmProductosLec extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnCancelarActionPerformed
 
     private void jbtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnModificarActionPerformed
-         int row = jTableProductos.getSelectedRow();
+        int row = jTableProductos.getSelectedRow();
         if (row != -1) {
             opcionCRUD = OpcionesCRUD.MODIFICAR;
             FrmProductoEsc frmProductosEsc = new FrmProductoEsc(opcionCRUD, obtenerDatos());
@@ -194,7 +215,7 @@ public class FrmProductosLec extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnModificarActionPerformed
 
     private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEliminarActionPerformed
-           int row = jTableProductos.getSelectedRow();
+        int row = jTableProductos.getSelectedRow();
         if (row != -1) {
             opcionCRUD = OpcionesCRUD.ELIMINAR;
             FrmProductoEsc frmProductosEsc = new FrmProductoEsc(opcionCRUD, obtenerDatos());
@@ -220,13 +241,27 @@ public class FrmProductosLec extends javax.swing.JFrame {
             datos[i][2] = item.getDescripcion();
             datos[i][3] = item.getCategoria();
             datos[i][4] = item.getPrecio();
-           
-      
+
         }
         DefaultTableModel modelTable = new DefaultTableModel(datos, columnas);
         jTableProductos.setModel(modelTable);
     }//GEN-LAST:event_jBtnBuscarActionPerformed
 
+    private void jBtnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnBuscarMouseEntered
+       jbtnCancelar.setBackground(Color.lightGray);
+    }//GEN-LAST:event_jBtnBuscarMouseEntered
+
+    private void jbtnCrearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCrearMouseEntered
+        jbtnCrear.setBackground(Color.GREEN);
+    }//GEN-LAST:event_jbtnCrearMouseEntered
+
+    private void jbtnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnEliminarMouseEntered
+          jbtnEliminar.setBackground(Color.RED);
+    }//GEN-LAST:event_jbtnEliminarMouseEntered
+
+    private void jbtnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCancelarMouseEntered
+         jbtnCancelar.setBackground(Color.GRAY);
+    }//GEN-LAST:event_jbtnCancelarMouseEntered
 
     /**
      * @param args the command line arguments
