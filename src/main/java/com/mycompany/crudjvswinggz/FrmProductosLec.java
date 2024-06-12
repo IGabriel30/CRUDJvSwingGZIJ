@@ -20,11 +20,15 @@ public class FrmProductosLec extends javax.swing.JFrame {
 
     private OpcionesCRUD opcionCRUD;
 
+    private Color originalButtonColor;
+
     /**
      * Creates new form FrmProductosLec
      */
     public FrmProductosLec() {
+
         initComponents();
+        originalButtonColor = jbtnModificar.getBackground();
     }
 
     /**
@@ -60,6 +64,9 @@ public class FrmProductosLec extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jBtnBuscarMouseEntered(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jBtnBuscarMouseExited(evt);
+            }
         });
         jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +84,9 @@ public class FrmProductosLec extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jbtnCrearMouseEntered(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtnCrearMouseExited(evt);
+            }
         });
         jbtnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,6 +100,14 @@ public class FrmProductosLec extends javax.swing.JFrame {
         jbtnModificar.setBackground(new java.awt.Color(153, 153, 255));
         jbtnModificar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jbtnModificar.setText("Modificar");
+        jbtnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnModificarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtnModificarMouseExited(evt);
+            }
+        });
         jbtnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnModificarActionPerformed(evt);
@@ -102,6 +120,9 @@ public class FrmProductosLec extends javax.swing.JFrame {
         jbtnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jbtnEliminarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtnEliminarMouseExited(evt);
             }
         });
         jbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +138,9 @@ public class FrmProductosLec extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jbtnCancelarMouseEntered(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtnCancelarMouseExited(evt);
+            }
         });
         jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,50 +153,50 @@ public class FrmProductosLec extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(101, 101, 101)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBtnBuscar)
+                .addGap(101, 101, 101)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(176, 176, 176))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jbtnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(92, 92, 92))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnCrear))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jbtnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbtnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbtnCancelar)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtnCrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(2, 2, 2)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtNombre)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jBtnBuscar)
                     .addComponent(jbtnCrear))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addGap(36, 36, 36)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnModificar)
-                    .addComponent(jbtnEliminar)
-                    .addComponent(jbtnCancelar))
-                .addGap(38, 38, 38))
+                    .addComponent(jbtnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(45, 45, 45))
         );
 
         pack();
@@ -248,20 +272,44 @@ public class FrmProductosLec extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     private void jBtnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnBuscarMouseEntered
-       jbtnCancelar.setBackground(Color.lightGray);
+        jbtnCancelar.setBackground(Color.lightGray);
     }//GEN-LAST:event_jBtnBuscarMouseEntered
 
     private void jbtnCrearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCrearMouseEntered
-        jbtnCrear.setBackground(Color.GREEN);
+        jbtnCrear.setBackground(Color.PINK);
     }//GEN-LAST:event_jbtnCrearMouseEntered
 
     private void jbtnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnEliminarMouseEntered
-          jbtnEliminar.setBackground(Color.RED);
+        jbtnEliminar.setBackground(Color.RED);
     }//GEN-LAST:event_jbtnEliminarMouseEntered
 
     private void jbtnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCancelarMouseEntered
-         jbtnCancelar.setBackground(Color.GRAY);
+        jbtnCancelar.setBackground(Color.GRAY);
     }//GEN-LAST:event_jbtnCancelarMouseEntered
+
+    private void jBtnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnBuscarMouseExited
+        jBtnBuscar.setBackground(originalButtonColor);
+    }//GEN-LAST:event_jBtnBuscarMouseExited
+
+    private void jbtnCrearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCrearMouseExited
+        jbtnCrear.setBackground(originalButtonColor);
+    }//GEN-LAST:event_jbtnCrearMouseExited
+
+    private void jbtnModificarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnModificarMouseEntered
+        jbtnModificar.setBackground(Color.WHITE);
+    }//GEN-LAST:event_jbtnModificarMouseEntered
+
+    private void jbtnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnEliminarMouseExited
+        jbtnEliminar.setBackground(originalButtonColor);
+    }//GEN-LAST:event_jbtnEliminarMouseExited
+
+    private void jbtnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCancelarMouseExited
+        jbtnCancelar.setBackground(originalButtonColor);
+    }//GEN-LAST:event_jbtnCancelarMouseExited
+
+    private void jbtnModificarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnModificarMouseExited
+        jbtnModificar.setBackground(originalButtonColor);
+    }//GEN-LAST:event_jbtnModificarMouseExited
 
     /**
      * @param args the command line arguments
