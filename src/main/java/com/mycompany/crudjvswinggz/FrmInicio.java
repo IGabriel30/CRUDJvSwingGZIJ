@@ -36,6 +36,7 @@ public class FrmInicio extends javax.swing.JFrame {
         jMeCerrar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("CRUD JAVA SWING GZIJ");
         setBackground(new java.awt.Color(204, 204, 255));
 
         jMenuBar1.setBackground(new java.awt.Color(204, 204, 255));

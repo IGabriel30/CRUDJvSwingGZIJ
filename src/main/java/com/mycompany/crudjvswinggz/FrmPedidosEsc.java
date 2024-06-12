@@ -70,6 +70,7 @@ public class FrmPedidosEsc extends javax.swing.JFrame {
     Productos producto = (Productos) jComboProducto.getSelectedItem();
     pedido.setProductoID(producto.getProductoID());
    
+    pedido.setPedidoID(pedidoActual.getPedidoID());
     return pedido;
     }
 

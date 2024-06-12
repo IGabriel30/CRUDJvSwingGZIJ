@@ -28,8 +28,10 @@ public class PedidoDAL {
                 statement.setDate(1, sqlDate);
                 statement.setString(2, pedidos.getNombreCliente());
                 statement.setString(3, pedidos.getCorreoCliente());
-                statement.setInt(4, pedidos.getCantidad());
-                statement.setInt(5, pedidos.getProductoID());
+                
+                 statement.setInt(4, pedidos.getProductoID());
+                statement.setInt(5, pedidos.getCantidad());
+               
                 int rowsAffected = statement.executeUpdate();
                 return rowsAffected;
             } catch (SQLException e) {
@@ -48,8 +50,10 @@ public class PedidoDAL {
             statement.setDate(1, sqlDate);
             statement.setString(2, pedidos.getNombreCliente());
             statement.setString(3, pedidos.getCorreoCliente());
-            statement.setInt(4, pedidos.getCantidad());
-            statement.setInt(5, pedidos.getProductoID());
+            
+                statement.setInt(4, pedidos.getProductoID());
+            statement.setInt(5, pedidos.getCantidad());
+        
             statement.setInt(6, pedidos.getPedidoID());
             int rowsAffected = statement.executeUpdate();
             return rowsAffected;
